@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "b8abf1f398e62f09b196a20c3c2e6cdb"
+name = "Orders-Tag-Mailer"
+handle = "orders-tag-mailer"
+application_url = "https://ought-philadelphia-subjective-represent.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "testshanecunnigham.myshopify.com"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://ought-philadelphia-subjective-represent.trycloudflare.com/auth/callback",
+  "https://ought-philadelphia-subjective-represent.trycloudflare.com/auth/shopify/callback",
+  "https://ought-philadelphia-subjective-represent.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+[pos]
+embedded = false
