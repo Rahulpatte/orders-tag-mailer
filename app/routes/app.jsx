@@ -5,7 +5,10 @@ import { AppProvider } from "@shopify/shopify-app-remix/react";
 import { NavMenu } from "@shopify/app-bridge-react";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
 import { authenticate } from "../shopify.server";
+
 import ToastExample from "../components/Toast";
+import { useEffect } from "react";
+
 
 export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
 
@@ -18,11 +21,18 @@ export const loader = async ({ request }) => {
 export default function App() {
   const { apiKey } = useLoaderData();
 
+  useEffect(() => {
+    document.querySelector(".Polaris-Frame").style.display = 'none';
+  }, []);
+
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
       <NavMenu>
         <Link to="/app" rel="home">
           Home
+        </Link>
+        <Link to="/app/ManageSmtp">
+          Manage SMTP
         </Link>
       </NavMenu>
       <Outlet />

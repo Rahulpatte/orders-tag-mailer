@@ -3,22 +3,23 @@
 client_id = "b8abf1f398e62f09b196a20c3c2e6cdb"
 name = "Orders-Tag-Mailer"
 handle = "orders-tag-mailer"
-application_url = "https://ought-philadelphia-subjective-represent.trycloudflare.com"
+application_url = "https://jeremy-chem-convenience-chaos.trycloudflare.com"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
 dev_store_url = "testshanecunnigham.myshopify.com"
+include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_orders,write_orders,write_products"
 
 [auth]
 redirect_urls = [
-  "https://ought-philadelphia-subjective-represent.trycloudflare.com/auth/callback",
-  "https://ought-philadelphia-subjective-represent.trycloudflare.com/auth/shopify/callback",
-  "https://ought-philadelphia-subjective-represent.trycloudflare.com/api/auth/callback"
+  "https://jeremy-chem-convenience-chaos.trycloudflare.com/auth/callback",
+  "https://jeremy-chem-convenience-chaos.trycloudflare.com/auth/shopify/callback",
+  "https://jeremy-chem-convenience-chaos.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
