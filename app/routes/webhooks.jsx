@@ -19,9 +19,6 @@ export const action = async ({ request }) => {
       }
 
       break;
-    case "ORDERS_EDITED":
-      console.log("payload ORDERS_EDITED", payload)
-      break;
     case "ORDERS_UPDATED":
       console.log("payload ORDERS_UPDATED", payload)
       break;
