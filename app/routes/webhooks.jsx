@@ -1,5 +1,6 @@
 import { authenticate } from "../shopify.server";
 import shopModel from "../MONGODB/ShopModel";
+import sendEmailWithContent from "../Utils/sendEmailWithContent";
 
 export const action = async ({ request }) => {
   const { topic, shop, session, admin, payload } = await authenticate.webhook(request);
@@ -20,7 +21,8 @@ export const action = async ({ request }) => {
 
       break;
     case "ORDERS_UPDATED":
-      console.log("payload ORDERS_UPDATED", payload)
+      // console.log("payload ORDERS_UPDATED", payload, payload.line_items[0].discount_allocations,payload.line_items[0].total_discount)
+      sendEmailWithContent(payload,session,admin)
       break;
     case "CUSTOMERS_DATA_REQUEST":
     case "CUSTOMERS_REDACT":

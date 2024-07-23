@@ -3,7 +3,7 @@
 client_id = "b8abf1f398e62f09b196a20c3c2e6cdb"
 name = "Orders-Tag-Mailer"
 handle = "orders-tag-mailer"
-application_url = "https://satisfy-armed-error-representation.trycloudflare.com"
+application_url = "https://kay-whether-okay-structured.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_orders,write_orders,write_products"
 
 [auth]
 redirect_urls = [
-  "https://satisfy-armed-error-representation.trycloudflare.com/auth/callback",
-  "https://satisfy-armed-error-representation.trycloudflare.com/auth/shopify/callback",
-  "https://satisfy-armed-error-representation.trycloudflare.com/api/auth/callback"
+  "https://kay-whether-okay-structured.trycloudflare.com/auth/callback",
+  "https://kay-whether-okay-structured.trycloudflare.com/auth/shopify/callback",
+  "https://kay-whether-okay-structured.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
