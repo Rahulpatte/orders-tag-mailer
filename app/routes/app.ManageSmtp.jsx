@@ -6,8 +6,9 @@ import {
     Text,
     TextField,
     Card,
-    Page, SkeletonBodyText, Box
+    Page, SkeletonBodyText, Box, Icon
 } from "@shopify/polaris";
+import { ViewIcon, HideIcon } from '@shopify/polaris-icons'; // Import icons
 import Placeholder from "../components/Placeholder";
 import '../components/app.css'
 import { showToast } from "../components/Toast";
@@ -21,22 +22,22 @@ export default function ManageSmtp() {
         password: '',
         port: ''
     });
-    const [dataNotRecieved, setDataNotReceived] = useState(true)
+    const [dataNotRecieved, setDataNotReceived] = useState(true);
     const [isFormDirty, setFormDirty] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
 
     useEffect(() => {
-        fetchSmtpDetails()
+        fetchSmtpDetails();
     }, []);
 
     const fetchSmtpDetails = async () => {
         try {
-
             const response = await fetch('/api/getSMTPDetails', {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json"
                 },
-            })
+            });
 
             if (response.ok) {
                 const { data } = await response.json();
@@ -44,15 +45,12 @@ export default function ManageSmtp() {
                     setSmtpDetails(data[0]);
                 } else {
                     console.warn('No SMTP details found in response.');
-                    // showToast('No SMTP details found.', 'error');
                 }
-                setDataNotReceived(false)
+                setDataNotReceived(false);
             } else {
                 console.error('Failed to fetch SMTP details. Server responded with:', response.status);
                 showToast('Failed to fetch SMTP details. Please try again.', 'error');
             }
-
-
         } catch (error) {
             console.error('Failed to fetch SMTP details:', error);
             showToast('Failed to fetch SMTP details. Please try again.', 'error');
@@ -81,7 +79,7 @@ export default function ManageSmtp() {
                 port: smtpDetails.port,
                 username: smtpDetails.username,
                 ...(smtpDetails._id ? { _id: smtpDetails._id } : null)
-            }
+            };
 
             const response = await fetch('/api/manageSmtp', {
                 method: 'POST',
@@ -89,20 +87,19 @@ export default function ManageSmtp() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(apiData)
-            })
+            });
 
             if (response.ok) {
                 showToast('SMTP details saved successfully!');
-
             } else {
-                showToast(response.error)
+                showToast(response.error);
             }
 
         } catch (error) {
             console.error('Failed to save SMTP details:', error);
             showToast('Failed to save SMTP details. Please try again.', 'error');
         } finally {
-            fetchSmtpDetails()
+            fetchSmtpDetails();
             setLoading(false);
             setFormDirty(false);
         }
@@ -112,15 +109,17 @@ export default function ManageSmtp() {
         return smtpDetails.host.trim() !== '' &&
             smtpDetails.username.trim() !== '' &&
             smtpDetails.password.trim() !== '' &&
-            smtpDetails.port !== ''
+            smtpDetails.port !== '';
     };
 
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     return (
         <Page narrowWidth>
             <div style={{ marginTop: "4rem" }}></div>
             <Card sectioned title="Login">
-
                 <Placeholder
                     component={
                         <>
@@ -129,10 +128,10 @@ export default function ManageSmtp() {
                             </Text>
                             <div style={{ marginTop: "1rem" }}></div>
 
-
-                            {dataNotRecieved ? <Box paddingBlockStart="200">
-                                <SkeletonBodyText lines={13} />
-                            </Box>
+                            {dataNotRecieved ?
+                                <Box paddingBlockStart="200">
+                                    <SkeletonBodyText lines={13} />
+                                </Box>
                                 :
                                 <Form>
                                     <FormLayout>
@@ -150,13 +149,30 @@ export default function ManageSmtp() {
                                             onChange={(value) => handleInputChange(value, 'username')}
                                         />
 
-                                        <TextField
-                                            label="SMTP Password"
-                                            placeholder="Please enter SMTP Password"
-                                            type="text"
-                                            value={smtpDetails.password}
-                                            onChange={(value) => handleInputChange(value, 'password')}
-                                        />
+                                        <div style={{ position: 'relative' }}>
+                                            <TextField
+                                                label="SMTP Password"
+                                                placeholder="Please enter SMTP Password"
+                                                value={smtpDetails.password}
+                                                type={passwordVisible ? 'text' : 'password'}
+                                                onChange={(value) => handleInputChange(value, 'password')}
+                                            />
+                                            <span
+                                                onClick={togglePasswordVisibility}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: '50%',
+                                                    right: '10px',
+                                                    cursor: 'pointer',
+                                                    transform: 'translateY(10%)',
+                                                    zIndex: 99999
+                                                }}
+                                            >
+                                                <Icon
+                                                    source={passwordVisible ? ViewIcon : HideIcon}
+                                                />
+                                            </span>
+                                        </div>
 
                                         <TextField
                                             label="SMTP Port"
@@ -165,13 +181,18 @@ export default function ManageSmtp() {
                                             value={smtpDetails.port}
                                             onChange={(value) => handleInputChange(value, 'port')}
                                         />
-
                                     </FormLayout>
-
                                 </Form>
                             }
+
                             <div className="buttonContainer">
-                                <Button size="large" loading={isLoading} variant="primary"  disabled={!isFormDirty || isLoading} onClick={handleSubmit}>
+                                <Button
+                                    size="large"
+                                    loading={isLoading}
+                                    variant="primary"
+                                    disabled={!isFormDirty || isLoading}
+                                    onClick={handleSubmit}
+                                >
                                     Save
                                 </Button>
                             </div>
@@ -184,7 +205,6 @@ export default function ManageSmtp() {
                     marginBottom='0'
                     itemsCentered={false}
                 />
-
             </Card>
         </Page>
     );
