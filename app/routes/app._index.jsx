@@ -1,5 +1,5 @@
 import React from "react";
-import { Page, Card, Text, Divider, CalloutCard, Button } from "@shopify/polaris";
+import { Page, Text, Divider, CalloutCard, Button } from "@shopify/polaris";
 import Logo from '/email-tag-logo-removebg-preview.png'
 import styles from "./_index/styles.module.css"
 import { useNavigate } from "@remix-run/react";

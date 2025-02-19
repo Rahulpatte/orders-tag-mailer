@@ -4,9 +4,9 @@ import TagTable from './TagTable';
 import './TagMain.css'
 import { showToast } from '../Toast';
 import { PlusIcon } from '@shopify/polaris-icons';
-import { useSnapshot } from 'valtio';
-import { store } from '../../valtio/store';
+import table_logo from '/email-tag-table-logo-removebg-preview.png'
 import ModalComponent from '../ModalComponent';
+import styles from '../../routes/_index/styles.module.css'
 
 export default function TagMain() {
     const [isLoading, setLoading] = useState(false)
@@ -173,10 +173,10 @@ export default function TagMain() {
 
     return (
         <>
-
             <div className='clockTableHeading' style={{ marginBottom: '1.5rem' }}>
                 <Text variant="headingXl" as="h4">
-                    <span className='headingTextColor'>Tags Table</span>
+                    {/* <span className='headingTextColor'>Tags Table</span> */}
+                    <img style={{marginBottom: "-1em"}} className={styles[`app-logo`]} src={table_logo} alt="email-tags-table-logo" />
                 </Text>
             </div>
             <div className='paddingOutsideTable'>
@@ -217,7 +217,6 @@ export default function TagMain() {
                 setValue={setFormData}
                 isLoadingButton={isActionLoading}
             />
-
         </>
     )
 }
