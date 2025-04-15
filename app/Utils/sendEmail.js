@@ -1,37 +1,30 @@
-import nodemailer from "nodemailer"
-import SMTPModel from "../MONGODB/SMTPModel"
+import sgMail from "@sendgrid/mail"
 
+import dotenv from "dotenv"
+dotenv.config()
 
 const sendEmail = async (shopURL, email, subject, html) => {
+    console.log("triggred on sendEmail....")
+    try {
 
-    const emailConfigData = await SMTPModel.findOne({ shopURL })
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-    const transporter = nodemailer.createTransport({
-        pool: true,
-        host: emailConfigData.host,
-        port: emailConfigData.port || 465,
-        secure: true, // use TLS
-        auth: {
-            user: emailConfigData.username,
-            pass: emailConfigData.password,
-        },
-    });
-
-    const mailOptions = {
-        from: emailConfigData.username,
-        to: email,
-        subject: subject,
-        html: html 
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
+        const msg = {
+            from: `${shopURL.split(".myshopify.com")[0]}@emailtag.app`,
+            to: email,
+            subject: subject,
+            html: html,
+            replyTo: "replyto@emailtag.app",
         }
-    });
+
+        const res = await sgMail.send(msg)
+
+        console.log("email response", res[0]?.statusCode)
+
+    } catch (error) {
+        console.log("email error", error)
+    }
+
 }
 
-
-export default sendEmail
+export default sendEmail 
