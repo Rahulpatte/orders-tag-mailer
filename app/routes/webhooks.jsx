@@ -25,8 +25,11 @@ export const action = async ({ request }) => {
       sendEmailWithContent(payload,session,admin)
       break;
     case "CUSTOMERS_DATA_REQUEST":
+      break;
     case "CUSTOMERS_REDACT":
+      break;
     case "SHOP_REDACT":
+      break;
     default:
       throw new Response("Unhandled webhook topic", { status: 404 });
   }

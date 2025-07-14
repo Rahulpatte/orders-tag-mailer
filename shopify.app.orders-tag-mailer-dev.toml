@@ -1,0 +1,29 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "c894876891091e6be6e6f08778b485fa"
+application_url = "https://termination-excel-meaningful-listening.trycloudflare.com"
+embedded = true
+name = "orders-tag-mailer-dev"
+handle = "orders-tag-mailer-dev"
+
+[build]
+include_config_on_deploy = true
+dev_store_url = "generated-store-1.myshopify.com"
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-04"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_orders,write_orders,write_products"
+
+[auth]
+redirect_urls = [
+  "https://termination-excel-meaningful-listening.trycloudflare.com/auth/callback",
+  "https://termination-excel-meaningful-listening.trycloudflare.com/auth/shopify/callback",
+  "https://termination-excel-meaningful-listening.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false

@@ -30,7 +30,7 @@ export default function Index() {
               url: '/app/tags',
             }}
           >
-            <p>Add a tag to any email then tag an order and that email will be sent create tag email flow with Shopify Flow</p>
+            <p>Customize the email template using the tags. Tag an order, and the corresponding email with the matching tag will be sent.</p>
           </CalloutCard>
         </div>
 
