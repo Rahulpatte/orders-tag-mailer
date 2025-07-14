@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "c894876891091e6be6e6f08778b485fa"
-application_url = "https://termination-excel-meaningful-listening.trycloudflare.com"
+application_url = "https://consortium-spell-treating-soldier.trycloudflare.com"
 embedded = true
 name = "orders-tag-mailer-dev"
 handle = "orders-tag-mailer-dev"
@@ -20,9 +20,9 @@ scopes = "read_orders,write_orders,write_products"
 
 [auth]
 redirect_urls = [
-  "https://termination-excel-meaningful-listening.trycloudflare.com/auth/callback",
-  "https://termination-excel-meaningful-listening.trycloudflare.com/auth/shopify/callback",
-  "https://termination-excel-meaningful-listening.trycloudflare.com/api/auth/callback"
+  "https://consortium-spell-treating-soldier.trycloudflare.com/auth/callback",
+  "https://consortium-spell-treating-soldier.trycloudflare.com/auth/shopify/callback",
+  "https://consortium-spell-treating-soldier.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

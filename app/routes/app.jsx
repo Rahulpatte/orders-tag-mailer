@@ -85,6 +85,9 @@ export default function App() {
         <Link to="/app/plans">
           Plan
         </Link>
+        <Link to="/app/email/logs">
+          Email Logs
+        </Link>
       </NavMenu>
       <Outlet context={{ activeSubscriptionsData }} />
       <ToastExample />

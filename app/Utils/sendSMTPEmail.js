@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer"
 import SMTPModel from "../MONGODB/SMTPModel"
+import EmailLog from "../MONGODB/EmailLog";
 
 export const sendSMTPEmail = async (shopURL, email, subject, html) => {
     try {
@@ -7,6 +8,14 @@ export const sendSMTPEmail = async (shopURL, email, subject, html) => {
         console.log("SMTPData", SMTPData);
         if (!SMTPData) {
             console.log(`SMTP details not found for shop ${shopURL}`);
+            await EmailLog.create({
+                shopURL,
+                to: email,
+                subject,
+                html,
+                status: 'failed',
+                error: 'SMTP credentials not found',
+            });
             return;
         }
 
@@ -23,7 +32,6 @@ export const sendSMTPEmail = async (shopURL, email, subject, html) => {
             }
         };
 
-
         const transporter = nodemailer.createTransport(transportOptions);
 
         const mailOptions = {
@@ -35,7 +43,24 @@ export const sendSMTPEmail = async (shopURL, email, subject, html) => {
 
         const info = await transporter.sendMail(mailOptions);
         console.log(`Message sent using SMTP: ${info.response}`);
+        await EmailLog.create({
+            shopURL,
+            to: email,
+            subject,
+            html,
+            status: 'sent',
+            response: info.response,
+        });
+
     } catch (error) {
         console.log("error on sending email using an SMTP", error);
+        await EmailLog.create({
+            shopURL,
+            to: email,
+            subject,
+            html,
+            status: 'failed',
+            error: error.message || String(error),
+        });
     }
 }
