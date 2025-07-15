@@ -8,12 +8,10 @@ import {
     ButtonGroup,
     Button,
     Text,
-    Badge,
-    Tooltip,
-    Icon
+    Badge
 } from '@shopify/polaris';
-import { ChatIcon } from '@shopify/polaris-icons';
 import { useState, useCallback } from 'react';
+import { ResponsePopover } from './ResponsePopover';
 
 const emptyStateMarkup = (
     <EmptySearchResult
@@ -24,15 +22,16 @@ const emptyStateMarkup = (
 );
 
 export default function EmailLogsTable({
-    sortSelected,
+    selectedSorting,
     emailLogs,
-    setSelectedFilter,
+    setSelectedSorting,
     setCurrentPage,
     pageInfo,
     isTableLoading,
     queryValue,
     setQueryValue,
-    handleRetry,
+    openModal,
+    actionId
 }) {
     const [selected, setSelected] = useState(0);
     const { mode, setMode } = useSetIndexFiltersMode();
@@ -101,31 +100,24 @@ export default function EmailLogsTable({
                     <IndexTable.Cell>
                         <Badge
                             progress={status === 'sent' ? 'complete' : 'incomplete'}
-                            tone="read-only"
+                            tone={status === 'sent' ? 'success' : 'critical'}
                         >
                             {String(status).charAt(0).toUpperCase() + String(status).slice(1)}
                         </Badge>
-
                     </IndexTable.Cell>
                     <IndexTable.Cell>
-                        <Tooltip content={response ?? "N/A"}>
-                            <Button icon={<Icon source={ChatIcon} />} />
-                        </Tooltip>
+                        <ResponsePopover content={response} />
                     </IndexTable.Cell>
                     <IndexTable.Cell>
-                        <Tooltip content={error ?? "N/A"}>
-                            <Button icon={<Icon source={ChatIcon} />} />
-                        </Tooltip>
+                        <ResponsePopover content={error} />
                     </IndexTable.Cell>
                     <IndexTable.Cell>
-                        <div>
-                            <ButtonGroup>
-                                <Button tone='success' onClick={() => handleRetry({
-                                    _id
-                                })}>
-                                    Retry</Button>
-                            </ButtonGroup>
-                        </div>
+                        <ButtonGroup>
+                            <Button tone={error ? 'critical' : 'success'} loading={_id === actionId} onClick={() => openModal({
+                                _id
+                            })}>
+                                {error ? "Retry" : "Resend"}</Button>
+                        </ButtonGroup>
                     </IndexTable.Cell>
                 </IndexTable.Row>
             );
@@ -137,11 +129,11 @@ export default function EmailLogsTable({
             <IndexFilters
                 sortOptions={sortOptions}
                 onSort={(selected) => {
-                    setSelectedFilter(selected);
+                    setSelectedSorting(selected);
                     setCurrentPage(1);
                 }}
-                sortSelected={sortSelected}
-                queryPlaceholder={"Search subscription by name"}
+                sortSelected={selectedSorting}
+                queryPlaceholder={"Search by customer email or subject"}
                 onQueryChange={handleFiltersQueryChange}
                 queryValue={queryValue}
                 onQueryClear={() => {
