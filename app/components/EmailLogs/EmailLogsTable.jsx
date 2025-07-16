@@ -71,7 +71,7 @@ export default function EmailLogsTable({
 
     const rowMarkup = emailLogs.length ? emailLogs.map(
         (
-            { _id, to, subject, status, response, error },
+            { _id, to, subject, isViewed, status, response, error },
             index,
         ) => {
 
@@ -104,6 +104,11 @@ export default function EmailLogsTable({
                         >
                             {String(status).charAt(0).toUpperCase() + String(status).slice(1)}
                         </Badge>
+                    </IndexTable.Cell>
+                    <IndexTable.Cell>
+                        <Text as="span" variant="bodySm" fontWeight='bold' tone={isViewed ? 'success' : 'subdued'}>
+                            {isViewed ? "Yes" : "No"}
+                        </Text>
                     </IndexTable.Cell>
                     <IndexTable.Cell>
                         <ResponsePopover content={response} />
@@ -169,6 +174,7 @@ export default function EmailLogsTable({
                     { title: "Customer email" },
                     { title: "Subject" },
                     { title: "Status" },
+                    { title: "Viewed" },
                     { title: "Response" },
                     { title: "Error" },
                     { title: "Action" }

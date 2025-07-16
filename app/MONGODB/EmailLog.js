@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const emailLogSchema = new mongoose.Schema({
+    trackingId: {
+        type: String,
+        required: true
+    },
     shopURL: {
         type: String,
         required: true,
@@ -21,6 +25,10 @@ const emailLogSchema = new mongoose.Schema({
         type: String,
         enum: ['sent', 'failed'],
         default: 'sent',
+    },
+    isViewed: {
+        type: Boolean,
+        default: false,
     },
     response: {
         type: String,

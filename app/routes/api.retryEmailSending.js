@@ -16,7 +16,7 @@ export const action = async ({ request }) => {
         }
         console.log("gotEmailLog", gotEmailLog)
 
-        const sendStatus = await sendSMTPEmail(gotEmailLog.shopURL, gotEmailLog.to, gotEmailLog.subject, gotEmailLog.html, data._id)
+        const sendStatus = await sendSMTPEmail(gotEmailLog.trackingId, gotEmailLog.shopURL, gotEmailLog.to, gotEmailLog.subject, gotEmailLog.html, data._id)
         return new Response(JSON.stringify({ message: sendStatus }, { status: 200 }))
     } catch (error) {
         return new Response(JSON.stringify({ message: "error occured on retrying to send email", error }, { status: 500 }))

@@ -2,7 +2,7 @@ import nodemailer from "nodemailer"
 import SMTPModel from "../MONGODB/SMTPModel"
 import EmailLog from "../MONGODB/EmailLog";
 
-export const sendSMTPEmail = async (shopURL, email, subject, html, id) => {
+export const sendSMTPEmail = async (trackingId, shopURL, email, subject, html, id) => {
     try {
         const SMTPData = await SMTPModel.findOne({ shopURL })
         console.log("SMTPData", SMTPData);
@@ -16,6 +16,7 @@ export const sendSMTPEmail = async (shopURL, email, subject, html, id) => {
                 });
             } else {
                 await EmailLog.create({
+                    trackingId,
                     shopURL,
                     to: email,
                     subject,
@@ -69,6 +70,7 @@ export const sendSMTPEmail = async (shopURL, email, subject, html, id) => {
             return 'Email sent successfully'
         } else {
             await EmailLog.create({
+                trackingId,
                 shopURL,
                 to: email,
                 subject,
@@ -90,6 +92,7 @@ export const sendSMTPEmail = async (shopURL, email, subject, html, id) => {
             return error.message || String(error)
         } else {
             await EmailLog.create({
+                trackingId,
                 shopURL,
                 to: email,
                 subject,

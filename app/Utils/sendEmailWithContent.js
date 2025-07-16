@@ -1,22 +1,23 @@
 import TagInfoModel from "../MONGODB/TagInfoModel";
 // import sendEmail from "./sendEmail";
 import { sendSMTPEmail } from "./sendSMTPEmail";
+import { randomUUID } from 'node:crypto';
+
 
 
 function formatCurrency(currencyCode, amount) {
   try {
-    // Validate currency code
     if (!currencyCode || typeof currencyCode !== 'string') {
       throw new Error('Invalid currency code');
     }
 
-    // Create number formatter instance
+    // creatings number formatter instance
     const formatter = new Intl.NumberFormat(undefined, {
       style: 'currency',
       currency: currencyCode
     });
 
-    // Format the amount with currency symbol
+    // formating the amount with currency symbol
     return formatter.format(amount);
   } catch (error) {
     console.error('Error formatting currency:', error.message);
@@ -50,7 +51,7 @@ const getProductImage = async (id, admin, session) => {
 
 
 const sendEmailWithContent = async (data, session, admin) => {
-  console.log("data===========>", data)
+  // console.log("data===========>", data)
 
   try {
     const tags = data.tags;
@@ -95,6 +96,9 @@ const sendEmailWithContent = async (data, session, admin) => {
         })
 
         const productsTable = await Promise.all(productsTablePromise);
+
+        const trackingId = randomUUID();
+        // console.log("trackingId============>", trackingId)
 
         let emailHtml = `<!DOCTYPE html>
               <html lang="en">
@@ -501,6 +505,7 @@ const sendEmailWithContent = async (data, session, admin) => {
                       <p class="disclaimer__subtext">
                           If you have any questions, reply to this email or contact us at <a style={{ fontSize: "14px", textDecoration: "none", color: "#1990C6" }}>support@themeignite.com</a></p>
                   </div>
+                  <img src="${process.env.SHOPIFY_APP_URL}/api/capture-email-view?id=${trackingId}" alt="" width="1" height="1" style="display:none;">
               </div>
           </div>
           </body>
@@ -508,7 +513,7 @@ const sendEmailWithContent = async (data, session, admin) => {
               `
 
         // sendEmail(session.shop, data.contact_email, `Order ${data?.name} ${tag}`, emailHtml) // using sendGrid for now it is paused
-        sendSMTPEmail(session.shop, data.contact_email, `Order ${data?.name} ${tag}`, emailHtml) // using SMTP details
+        sendSMTPEmail(trackingId, session.shop, data.contact_email, `Order ${data?.name} ${tag}`, emailHtml) // using SMTP details
 
       }
 
