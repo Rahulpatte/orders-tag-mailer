@@ -1,0 +1,31 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "4754881ae73dbd5c4d081defa1c60908"
+application_url = "https://emailtag.app/"
+embedded = true
+name = "Smart Order Tag Email Alerts"
+handle = "smart-order-tag-email-alerts"
+
+[webhooks]
+api_version = "2024-07"
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks"
+  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_customers,read_orders,write_orders,write_products"
+
+[auth]
+redirect_urls = [
+  "https://emailtag.app/auth/callback",
+  "https://emailtag.app/auth/shopify/callback",
+  "https://emailtag.app/api/auth/callback"
+]
+
+[pos]
+embedded = false
+
+[build]
+include_config_on_deploy = true

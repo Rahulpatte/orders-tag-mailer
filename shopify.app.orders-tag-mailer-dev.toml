@@ -1,10 +1,10 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "c894876891091e6be6e6f08778b485fa"
-application_url = "https://take-architect-painting-actual.trycloudflare.com"
+application_url = "https://provinces-puppy-junction-frank.trycloudflare.com"
 embedded = true
-name = "orders-tag-mailer-dev"
-handle = "orders-tag-mailer-dev"
+name = "Smart Order Tag Email Alerts D"
+handle = "smart-order-tag-email-alerts-d"
 
 [build]
 include_config_on_deploy = true
@@ -14,15 +14,19 @@ automatically_update_urls_on_dev = true
 [webhooks]
 api_version = "2025-04"
 
+  [[webhooks.subscriptions]]
+  uri = "/webhooks"
+  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
+
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "read_orders,write_orders,write_products"
 
 [auth]
 redirect_urls = [
-  "https://take-architect-painting-actual.trycloudflare.com/auth/callback",
-  "https://take-architect-painting-actual.trycloudflare.com/auth/shopify/callback",
-  "https://take-architect-painting-actual.trycloudflare.com/api/auth/callback"
+  "https://provinces-puppy-junction-frank.trycloudflare.com/auth/callback",
+  "https://provinces-puppy-junction-frank.trycloudflare.com/auth/shopify/callback",
+  "https://provinces-puppy-junction-frank.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
